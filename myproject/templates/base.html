@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock title %}| Snack Theater</title>
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+     /*
+ font-family: 'Alfa Slab One', cursive;
+font-family: 'Creepster', cursive;
+font-family: 'Luckiest Guy', cursive;
+font-family: 'Nunito', sans-serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Rampart One', cursive;
+font-family: 'Roboto', sans-serif;
+font-family: 'Titan One', cursive;
+*/
+  @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Creepster&family=Luckiest+Guy&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rampart+One&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,700&family=Titan+One&display=swap');
+
+
+*{
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+   scroll-behavior: smooth;
+}
+
+body{
+   display: flex;
+   flex-direction: column;
+   font-family: 'roboto', sans-serif;
+}
+a{
+   color: #000;
+   text-decoration: none;
+}
+a:hover{
+   color: #000;
+}
+/*  Nav BAr */
+.navbar{
+display: flex;
+position: fixed;
+margin-top: 0;
+flex-direction:row;
+flex-wrap: nowrap;
+background-color: aliceblue;
+align-items: center;
+justify-content: space-evenly;
+height: 10vh;
+width: 100%;
+z-index: 10;
+cursor: pointer;
+}
+.theater{
+   height: 5vh;
+   width: 16vw;
+   text-decoration: none;
+   border-width: 0;
+   border-radius:5px;
+   border-color: aliceblue;
+}
+.theater:hover{
+   border-style: none;
+   border-width: 0;
+}
+.theater-box{
+display: flex;
+justify-content: flex-start;
+background-color: #fff;
+}
+.material-symbols-sharp {
+   margin-top: 5px;
+ font-variation-settings:
+ 
+ 'FILL' 1,
+ 'wght' 600,
+ 'GRAD' 0,
+ 'opsz' 48
+}
+.search{
+   height: 5vh;
+   width: 20vw;
+   text-decoration: none;
+   border-width: 0;
+   border-radius: 5px  0px 0px 5px;
+}
+.searchbar{
+   display: flex;
+   flex-direction: row;
+   border-width: 5px;
+   border-color: blueviolet;
+}
+.material-symbols-sharp {
+ border-radius:  0px 5px 5px  0px;
+ font-variation-settings:
+ 'FILL' 1,
+ 'wght' 600,
+ 'GRAD' 0,
+ 'opsz' 48
+}
+.search-1{
+   padding-top: 3px;
+   background-color: #fff;
+}
+.login{
+   display: flex;
+   height: 5vh;
+   width: 6vw;
+   background-color:rgb(110, 255, 216) ;
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   font-size: 400;
+   font-family: 'Roboto', sans-serif;
+   border-radius: 5px;
+   padding-top: 10px;
+}
+
+.material-symbols-outlined {
+ font-variation-settings:
+ 'FILL' 0,
+ 'wght' 400,
+ 'GRAD' 0,
+ 'opsz' 48
+}
+.cart{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   font-weight: 500;
+   font-family: 'Nunito', sans-serif;
+}
+.abt{
+   font-size: 20px;
+   font-family: 'Roboto', sans-serif;
+   margin-top: 5px;
+}
+.abt:hover{
+   border-width:  0 0 2px 0 ;
+   border-style: solid;
+   border-color:rgb(64, 255, 204) ;
+   
+}
+
+.admin{
+   display: flex;
+   height: 5vh;
+   width: 6vw;
+   border-width: 2px;
+   border-style: solid;
+   border-color: rgb(64, 255, 204) ;
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   font-size: 400;
+   font-family: 'Roboto', sans-serif;
+   border-radius: 5px;
+   padding-top: 10px;
+}
+
+/* First Div */ 
+
+
+.div-1{
+   display: flex;
+   flex-direction: row;
+   height: 80vh;
+   width: 100vw;
+}
+.well-msg{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: start;
+   width: 40vw;
+   margin-top: 15vh;
+   margin-left: 8vw;
+   text-align: center;
+   text-shadow: #000;
+}
+.wellmsg1{
+   top: -5vh;
+   height: 20vh;
+   font-family: 'Rampart One', cursive;   
+}
+.wellmsg1 h1{
+   font-weight:600;
+   font-size:10vh;
+   word-wrap:normal;
+   overflow:-moz-hidden-unscrollable;
+}
+.know{
+   height: 40px;
+   width: 140px;
+   border-radius: 5px;
+   background-color:  rgb(255, 68, 68);
+
+   border-width: 0;
+   color: #fff;
+}
+.popcorn{
+   display: flex;
+   width:60vw;
+   background-image: url(img/popcorn-1.png);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size:cover;
+   
+}
+.svg1{
+   position: absolute;
+   width: 50%;
+   top: -20%;
+   left: -20%;
+   z-index: -1;
+}
+.svg2{
+   position: absolute;
+   width: 20%;
+   top: 72vh;
+   left: 80vw;
+   z-index:1;
+}
+
+
+/* Div 2 */
+.ads{
+   justify-content: center;
+   align-items: center;
+   margin-top: 20vh;
+   margin-left: 25vw;
+   height: 600px;
+   width: 800px;
+   border-style: double;
+   border-radius: 10px;
+   border-width: 5px;
+   border-color:cadetblue;
+   
+}
+
+/* div 3 */
+
+.div-3{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   align-items: center;
+   height: 80vh;
+   width: 100vw;
+  margin-top: 5vh;
+}
+
+.snack-h{
+   display: flex;
+   text-align: center;
+   justify-content: center;
+   align-items: center;
+   text-decoration: wavy;
+   font-style: oblique;
+   font-family:'roboto';
+   font-weight:700;
+   font-size: 60px;
+   height: 10vh;
+   width: 100vw;
+}
+.box{
+   height: 70vh;
+   width: 100vw;
+   display: flex;
+   flex-direction: row;
+   align-items:center;
+   justify-content: space-evenly;
+   
+}
+.boxes{
+   height: 60vh;
+   width: 30vw;
+   border-radius: 5px;
+   background-color: rgba(237, 238, 240, 0.79);
+   
+}
+
+.b1{
+   background-image: url(img/burger.png);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   box-shadow: 6px 6.5px 6px 1.5px #dddddd;
+}
+.b2{
+   background-image: url(img/drinks1.jpg);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   box-shadow: 6px 6.5px 6px 1.5px #dddddd;
+}
+
+.b3{
+   background-image: url(img/drinks.png);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: contain;
+   box-shadow: 6px 6.5px 6px 1.5px #dddddd;
+}
+
+/* div 4 */
+
+.content{
+   display: flex;
+   flex-direction: column;
+}
+
+.content-1{
+   display: flex;
+   flex-direction: row;
+   margin-top: 5vh;
+}
+.content-11{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   justify-content: start;
+   padding:12vh 10vh;
+   width: 50vw;
+   text-align: start;
+   height: 60vh;
+}
+.content-12{
+   display: flex;
+   width: 50vw;
+   height: 50vh;
+   background-image: url(img/content-1.jpg);
+   background-position: center;
+   background-size: cover;
+   border-radius: 10px;
+}
+
+.content-2{
+   display: flex;
+   flex-direction: row;
+   margin-top: 5vh;
+}
+.content-21{
+   display: flex;
+   width: 50vw;
+   height: 50vh;
+   background-image: url(img/content-2.png);
+   background-position: center;
+   background-size: cover;
+   border-radius: 10px;
+}
+.content-22{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   justify-content: start;
+   padding:12vh 10vh;
+   width: 50vw;
+   text-align: start;
+   height: 60vh;
+}
+/* div 5 */
+
+.aboutus{
+   display: flex;
+   flex-direction: column;
+   justify-content: start;
+   align-items: center;
+   padding: 8vh 10vw;
+   text-align: center;
+   background-color: rgba(99, 1, 123, 0.797);
+   color: #fff;
+}
+
+/* div 6 */
+
+.contact{
+   display: flex;
+   flex-direction: row;
+   margin-top: 15vh;
+}
+.contact-msg{
+   display: flex;
+   flex-direction: column;
+   width: 50vw;
+   justify-content: flex-start;
+   padding: 5vh 6vw;
+}
+.contact-form{
+ display: flex;
+ flex-direction: column;
+ width: 50vw;
+ justify-content: start;
+}
+.name,.email{
+   height: 4vh;
+   width: 25vw;
+   border-radius: 5px;
+   background-color: rgba(242, 243, 244, 0.616);
+   border-width: 00;
+}
+.msgarea{
+   display: flex;
+   flex-direction: column;
+   height: 12vh;
+   width: 30vw;
+  
+}
+.send{
+   height: 5vh;
+   width: 8vw;
+   border-radius: 4px;
+   background-color:  rgba(99, 1, 123, 0.797);
+   border-style: none;
+   color: #fff;
+}
+
+/* footer */
+
+.footer{
+   margin-top: 5vh;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   background-color: aliceblue;
+   height: 4vh;
+   padding: 5vw;
+   
+}
+.foote{
+   display: flex;
+   align-items: center;
+   width: 50vw;
+}
+.socials{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.s1,.s2,.s3{
+   height: 4vh;
+   width: 4vw;
+   background-position: center;
+   background-size: contain;
+   background-repeat: no-repeat;
+}
+.s1{
+   background-image: url(img/insta-logo.png);
+}
+.s2{
+   background-image: url(img/fb-logo.webp);
+}
+.s3{
+   background-image: url(img/twiter-logo.webp);
+}
+</style>
+
+
+</head>
+<body>
+    <div>
+        <nav class="navbar">
+            <div><h1>Logo</h1></div>
+            <div class="theater-box">
+                <span class="material-symbols-sharp">
+                    location_on
+                </span> 
+             <div>
+               <div>
+                <input class="theater" list="theater" name="theater" placeholder="       Select your Theater">
+                <datalist id="theater">
+                <option value="theater 1">theater 1</option >
+                <option value="theater 2">theater 2</option>
+                <option value="theater 3">theater 3</option>
+                </datalist>  
+                </input> 
+               </div>
+             </div>
+            </div>
+            <div class="searchbar">
+                <input type="search"  class="search" placeholder="     Search your snacks here!!">
+                <div class="search-1">
+                    <span class="material-symbols-sharp">
+                        search
+                     </span>
+                </div>
+            </div>
+            <div class="abt"><a href="/products/about"><h5>About US</h5></a></div>
+            <div class="abt"><a href="/products/price"><h5>Contact US</h5></a></div>
+            <div class="login"><h4 href="/products/quantity">Login</h4></div>
+            <div class="admin"><h4 href="/products/new"> Admin</h4></div>
+        </nav>
+    </div>
+    {% block body %}{% endblock body %}
+    
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  
+</body>
+</html>
