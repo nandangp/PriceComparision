@@ -48,37 +48,43 @@ def get_html_content_a(product):
     return a_html_content
 
 def home(request):
-    product_data = None
     if 'product' in request.GET:
-        product = request.GET.get('product')
         product_data = dict()
+        product = request.GET.get('product', '')
 
-        #Amazon
+        # Amazon
         a_html_content = get_html_content_a(product)
-        #print(html_content)
-        soup = bs(a_html_content,'html.parser')
-        title = soup.find('div',class_='a-section a-spacing-none puis-padding-right-small s-title-instructions-style')
-        product_data['title_a'] = title.find('span',class_='a-size-medium a-color-base a-text-normal').text[0:115]
-        if product_data['title_a'] == ' ':
-            product_data['title_a']= product
-        #print(title)
-        amz_prize = soup.find('div',attrs={"data-component-type":"s-impression-logger"})
-        product_data['price_a'] = amz_prize.find('span',class_='a-price-whole').text
-        #print(product_data['price'])
-        image_div = soup.find('div',class_='a-section aok-relative s-image-fixed-height')
-        image_img = image_div.find('img')
-        image_src = image_img.get('src')
-        product_data['image_a'] = (f'{image_src}')
-        product = product.replace(' ','+')
-        product_data['link_a'] = (f'https://www.amazon.in/s?k={product}')
+        soup = bs(a_html_content, 'html.parser')
+        title = soup.find('span', class_='a-size-medium a-color-base a-text-normal')
+        if title:
+            product_data['title_a'] = title.text[0:115]
+        else:
+            product_data['title_a'] = 'Title Not Found'
+        
+        amz_prize = soup.find('div', attrs={"data-component-type": "s-impression-logger"})
+        if amz_prize:
+            price_a_spans = amz_prize.find_all('span', class_='a-price-whole')
+            if price_a_spans:
+                product_data['price_a'] = ' '.join([span.text for span in price_a_spans])
+            else:
+                product_data['price_a'] = 'Price Not Found'
+        else:
+            product_data['price_a'] = 'Price Not Found'
 
+        image_img = soup.find('img', class_='s-image')
+        if image_img:
+            image_src = image_img.get('src')
+            product_data['image_a'] = image_src
+        else:
+            product_data['image_a'] = 'Image Not Found'
+        product_data['link_a'] = f'https://www.amazon.in/s?k={product}'
 
-        #RelianceDigital
+         #RelianceDigital
         r_html_content = get_html_content_r(product)
         #print(html_content)
         soup = bs(r_html_content,'html.parser')
-        main_div = soup.find('li',class_='grid pl__container__sp blk__lg__3 blk__md__4 blk__sm__6 blk__xs__6')
-        text = main_div.find('div',class_='slider-text')
+        #main_div = soup.find('li',class_='grid pl_containersp blklg3 blkmd4 blksm6 blkxs_6')
+        text = soup.find('div',class_='slider-text')
         product_data['title_r']=text.find('p',class_='sp__name').text[0:115]
         price=text.find('span',class_='TextWeb__Text-sc-1cyx778-0')
         
@@ -106,24 +112,42 @@ def home(request):
         else:
             product_data['link_r']=url_link """
 
-        #Flipcart
+        
+        # Flipkart
         f_html_content = get_html_content_f(product)
-        #print(html_content)
-        soup = bs(f_html_content,'html.parser')
-        title = soup.find('div',class_='_3pLy-c row')
-        #print(title)
-        product_data['title_f'] = title.find('div',class_='_4rR01T').text [0:115]
-        product_data['price_f'] = soup.find('div',class_='_30jeq3 _1_WHN1').text
-        image_div = soup.find('div',class_='CXW8mj')
-        image_img = image_div.find('img')
-        image_src = image_img.get('src')
-        product_data['image_f'] = (f'{image_src}')
-        product = product.replace(' ','+')
-        product_data['link_f'] = (f'https://www.flipkart.com/search?q={product}')
+        soup = bs(f_html_content, 'html.parser')
+        title_div = soup.find('div', class_='_3pLy-c row')
+        if title_div:
+            title = title_div.find('div', class_='_4rR01T')
+            if title:
+                product_data['title_f'] = title.text[0:115]
+            else:
+                product_data['title_f'] = 'Title Not Found'
+        else:
+            product_data['title_f'] = 'Title Not Found'
 
+        price_div = soup.find('div', class_='_30jeq3')
+        if price_div:
+            product_data['price_f'] = price_div.text
+        else:
+            product_data['price_f'] = 'Price Not Found'
 
-        pass
-    return render(request,'home.html',{'data':product_data})
+        image_div = soup.find('div', class_='CXW8mj')
+        if image_div:
+            image_img = image_div.find('img')
+            if image_img:
+                image_src = image_img.get('src')
+                product_data['image_f'] = image_src
+            else:
+                product_data['image_f'] = 'Image Not Found'
+        else:
+            product_data['image_f'] = 'Image Not Found'
+
+        product_data['link_f'] = f'https://www.flipkart.com/search?q={product}'
+
+        return render(request, 'home.html', {'data': product_data})
+    else:
+        return render(request, 'home.html')
 
 def contact(request):
-    return render(request,'contact.html')
+    return render(request, 'contact.html')
