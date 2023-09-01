@@ -9,3 +9,14 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.Name
+    
+class Prizes(models.Model):
+    p_no = models.AutoField(primary_key=True)
+    p_name = models.CharField(max_length=50)
+    p_img = models.URLField()
+    f_prize = models.CharField(max_length=50)
+    a_prize = models.CharField(max_length=50)
+    r_prize = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.p_name

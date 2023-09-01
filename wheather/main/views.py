@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 import random
 import requests
 from bs4 import BeautifulSoup as bs
 from .models import Contact
+from .models import Prizes
 
 def get_html_content_r(product):
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
@@ -12,7 +12,6 @@ def get_html_content_r(product):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    
     product = product.replace(' ','+')
     r_html_content = session.get(f'https://www.reliancedigital.in/search?q={product}').text
     return r_html_content
@@ -24,7 +23,6 @@ def get_html_content_f(product):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    
     product = product.replace(' ','+')
     f_html_content =  session.get(f'https://www.flipkart.com/search?q={product}').text
     return f_html_content
@@ -42,7 +40,6 @@ def get_html_content_a(product):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    
     product = product.replace(' ','+')
     a_html_content = session.get(f'https://www.amazon.in/s?k={product}').text
     return a_html_content
@@ -79,28 +76,26 @@ def home(request):
             product_data['image_a'] = 'Image Not Found'
         product_data['link_a'] = f'https://www.amazon.in/s?k={product}'
 
-         #RelianceDigital
+         # RelianceDigital
         r_html_content = get_html_content_r(product)
-        #print(html_content)
         soup = bs(r_html_content,'html.parser')
-        #main_div = soup.find('li',class_='grid pl_containersp blklg3 blkmd4 blksm6 blkxs_6')
         text = soup.find('div',class_='slider-text')
-        product_data['title_r']=text.find('p',class_='sp__name').text[0:115]
-        price=text.find('span',class_='TextWeb__Text-sc-1cyx778-0')
+        product_data['title_r'] = text.find('p',class_='sp__name').text[0:115]
+        price = text.find('span',class_='TextWeb__Text-sc-1cyx778-0')
         
         if price:
             inner_spans = price.find_all('span')
             inner_texts = [span.text for span in inner_spans]
         
-        product_data['price_r']=(''.join(inner_texts))
+        product_data['price_r'] = (''.join(inner_texts))
            
         product_img = soup.find('div',class_='sp__productbox')
         product_img_1 = product_img.find('img')
-        url_img= product_img_1.get('data-srcset')
+        url_img = product_img_1.get('data-srcset')
         if url_img.startswith('/'):
-            product_data['image_r']=(f'https://www.reliancedigital.in' + url_img)
+            product_data['image_r'] = (f'https://www.reliancedigital.in' + url_img)
         else:
-            product_data['image_r']=url_img
+            product_data['image_r'] = url_img
         
         product = product.replace(' ','+')
         product_data['link_r'] = (f'https://www.reliancedigital.in/search?q={product}')
@@ -137,15 +132,25 @@ def home(request):
 
         product_data['link_f'] = f'https://www.flipkart.com/search?q={product}'
 
+        # Create a new Prizes object and save it to the database
+        prize_obj = Prizes(
+            p_name=product_data.get('title_a', 'Title Not Found'),
+            p_img=product_data.get('image_a', 'Image Not Found'),
+            f_prize=product_data.get('price_f', 'Price Not Found'),
+            a_prize=product_data.get('price_a', 'Price Not Found'),
+            r_prize=product_data.get('price_r', 'Price Not Found'),
+        )
+        prize_obj.save()
+
         return render(request, 'home.html', {'data': product_data})
     else:
         return render(request, 'home.html')
 
 def contact(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         Name = request.POST['name']
         Email = request.POST['email']
         Content = request.POST['content']
-        contact = Contact(Name=Name,Email=Email,Content=Content)
+        contact = Contact(Name=Name, Email=Email, Content=Content)
         contact.save()
     return render(request, 'contact.html')
