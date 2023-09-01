@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import random
 import requests
 from bs4 import BeautifulSoup as bs
-# Create your views here.
+from .models import Contact
 
 def get_html_content_r(product):
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
@@ -104,15 +104,7 @@ def home(request):
         
         product = product.replace(' ','+')
         product_data['link_r'] = (f'https://www.reliancedigital.in/search?q={product}')
-        """ product_link = soup.find('div',class_='sp grid')
-        product_link_1 = product_link.find('a',attrs={'attr-tag':'anchor'})
-        url_link = product_link_1.get('href')
-        if url_link.startswith('/'):
-            product_data['link_r']=(f'https://www.reliancedigital.in' + url_link)
-        else:
-            product_data['link_r']=url_link """
-
-        
+    
         # Flipkart
         f_html_content = get_html_content_f(product)
         soup = bs(f_html_content, 'html.parser')
@@ -150,4 +142,10 @@ def home(request):
         return render(request, 'home.html')
 
 def contact(request):
+    if request.method=='POST':
+        Name = request.POST['name']
+        Email = request.POST['email']
+        Content = request.POST['content']
+        contact = Contact(Name=Name,Email=Email,Content=Content)
+        contact.save()
     return render(request, 'contact.html')
